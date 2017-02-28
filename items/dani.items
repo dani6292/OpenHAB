@@ -1,0 +1,92 @@
+Group All
+Group gD 		(All)
+Group Outdoor 	(All)
+Group Shutters 	(All)
+Group Weather 	(All)
+Group Status 	(All)
+
+
+/* active groups */
+Group:Switch:OR(ON, OFF) 		Lights 		"All Lights [(%d)]" 	(All)
+Group:Switch:OR(ON, OFF) 		Heating 	"No. of Active Heatings [(%d)]" 	<heating> 		(All)
+Group:Number:AVG 				Temperature	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
+Group:Contact:OR(OPEN, CLOSED) 	Windows 	"Open windows [(%d)]"				<contact>		(All)
+
+/*Lights */
+Switch A1 		"Alarma" 					(gD, Lights) {energenie="A1"}
+Switch B1		"All_on/off"				(gD, Lights) {energenie="B1"}
+Dimmer C1 		"Bombilla [%d %%]" <slider>	(gD, Lights) {energenie="C1"}
+
+Contact Garage_Door 			"Garage Door [MAP(en.map):%s]"		(Outdoor, Windows)
+
+Group Weather_Chart			(Weather)
+
+/*Astro */
+DateTime Sunrise_Time  "Sunrise [%1$tH:%1$tM]"  {astro="planet=sun, type=rise, property=start"}
+DateTime Sunset_Time   "Sunset [%1$tH:%1$tM]"   {astro="planet=sun, type=set, property=end"}
+
+/*Precipitation*/
+Number   Rain          	      "Rain [%.2f mm/h]"   		{weather="locationId=home-OWM, type=precipitation, property=rain"}
+/*Number   Precip_Probability   "Precip probability [%d %%]"   	{weather="locationId=home-OWM, type=precipitation, property=probability"}
+Number   Precip_Total         "Precip total [%d mm]"  		{weather="locationId=home-OWM, type=precipitation, property=total"}*/
+
+/*Wind*/
+Number   Wind_Speed           "Windspeed [%.2f m/s]"         {weather="locationId=home-OWM, type=wind, property=speed"}
+String   Wind_Direction       "Wind Direction [%s]"           {weather="locationId=home-OWM, type=wind, property=direction"}
+
+/*Humidity*/
+Number Humidity       	     "Humidity 	[%d %%]"     {weather="locationId=home-OWM, type=atmosphere, property=humidity"}
+Number Pressure              "Pressure [%.2f hpa]"    {weather="locationId=home-OWM, type=atmosphere, property=pressure"}
+
+/*Temperature*/
+Number   Temperature_Max     "Temp. Max [%.2f °C]"   <temperature> (Weather_Chart)  {weather="locationId=home-OWM,forecast=0, type=temperature, property=max"}
+Number   Temperature_Min     "Temp. Min [%.2f °C]"   <temperature> (Weather_Chart)  {weather="locationId=home-OWM,forecast=0, type=temperature, property=min"}
+Number   Weather_Temperature   "Weather   [%.2f °C]"   <temperature> (Weather_Chart)   {weather="locationId=home-OWM, type=temperature, property=current"}
+
+/* Condition */
+String   CommonCondition   "Condition [MAP(openweathermap.map):%s]"   {weather="locationId=home-OWM, type=condition, property=icon"}
+
+/*forecast*/
+
+Number   Temperature_Forecast1_Min   "Temp. Min [%.2f °C]"   {weather="locationId=home-OWM,forecast=1, type=temperature, property=min"}
+Number   Temperature_Forecast1_Max   "Temp. Max [%.2f °C]"   {weather="locationId=home-OWM,forecast=1, type=temperature, property=max"}
+String   CommonCondition_Forecast1   "Condition [MAP(openweathermap.map):%s]"   {weather="locationId=home-OWM,forecast=1,type=condition, property=icon"}
+DateTime ObservationTime1  "Observation time [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"   {weather="locationId=home-OWM,forecast=1,type=condition, property=observationTime"}
+
+Number   Temperature_Forecast2_Min   "Temp. Min [%.2f °C]"   {weather="locationId=home-OWM,forecast=2, type=temperature, property=min"}
+Number   Temperature_Forecast2_Max   "Temp. Max [%.2f °C]"   {weather="locationId=home-OWM,forecast=2, type=temperature, property=max"}
+String   CommonCondition_Forecast2   "Condition [MAP(openweathermap.map):%s]"   {weather="locationId=home-OWM,forecast=2,type=condition, property=icon"}
+DateTime ObservationTime2  "Observation time [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"   {weather="locationId=home-OWM,forecast=2,type=condition, property=observationTime"}
+
+Number   Temperature_Forecast3_Min   "Temp. Min [%.2f °C]"   {weather="locationId=home-OWM,forecast=3, type=temperature, property=min"}
+Number   Temperature_Forecast3_Max   "Temp. Max [%.2f °C]"   {weather="locationId=home-OWM,forecast=3, type=temperature, property=max"}
+String   CommonCondition_Forecast3   "Condition [MAP(openweathermap.map):%s]"   {weather="locationId=home-OWM,forecast=3,type=condition, property=icon"}
+DateTime ObservationTime3  "Observation time [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"   {weather="locationId=home-OWM,forecast=3,type=condition, property=observationTime"}
+
+Number   Temperature_Forecast4_Min   "Temp. Min [%.2f °C]"   {weather="locationId=home-OWM,forecast=4, type=temperature, property=min"}
+Number   Temperature_Forecast4_Max   "Temp. Max [%.2f °C]"   {weather="locationId=home-OWM,forecast=4, type=temperature, property=max"}
+String   CommonCondition_Forecast4   "Condition [MAP(openweathermap.map):%s]"   {weather="locationId=home-OWM,forecast=4,type=condition, property=icon"}
+DateTime ObservationTime4  "Observation time [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"   {weather="locationId=home-OWM,forecast=4,type=condition, property=observationTime"}
+
+Number Weather_Chart_Period		"Chart Period"
+DateTime Weather_LastUpdate		"Last Update [%1$ta %1$tR]"	<clock>
+
+/* NTP binding demo item */
+DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Madrid:es_ES" }
+
+/* Demo items */
+Switch DemoSwitch				"Switch"
+Dimmer DimmedLight				"Dimmer [%d %%]"			<slider>
+Color  RGBLight					"RGB Light"				<slider>
+Rollershutter DemoShutter	 	        "Roller Shutter"
+Dimmer DemoBlinds			 	"Blinds [%d %%]"			<rollershutter>
+Number Scene_General				"Scene"					<sofa>
+Number Radio_Station				"Radio"					<network>
+Dimmer Volume 					"Volume [%.1f %%]"
+Number Temperature_Setpoint			"Temperature [%.1f °C]" 		<temperature>
+
+String UnknownDevices    "Unknown Devices in Range: [%s]" { bluetooth="?" }
+Number NoOfPairedDevices "Paired Devices in Range: [%d]"  { bluetooth="!" }
+
+/* Locations */
+Location DemoLocation			"Sevilla"

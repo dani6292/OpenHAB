@@ -1,0 +1,117 @@
+sitemap demo label="Demo House"
+{
+	Frame {
+		Group item=gD label="Dani" icon="cellar"	
+	}
+	Frame label="Weather" {
+		Text item=Weather_Temperature valuecolor=[Weather_LastUpdate=="Uninitialized"="lightgray",Weather_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"] {
+			Frame {
+				Text item=Temperature_Max valuecolor=[>25="red",>15="green",>5="orange",<=5="blue"]
+				Text item=Temperature_Min valuecolor=[>25="red",>15="green",>5="orange",<=5="blue"]
+				Text item=Weather_LastUpdate visibility=[Weather_LastUpdate>30] valuecolor=[Weather_LastUpdate>120="orange", Weather_LastUpdate>300="red"]
+			}
+			
+			Frame label="Wind"{
+				Text item=Wind_Speed			icon="viento"
+				Text item=Wind_Direction        icon="viento"
+
+			}
+			Frame label="Current Atmosfere Condition"{
+				Text item=Humidity		icon="humidity"
+				Text item=Pressure		icon="pressure"
+				Text item=CommonCondition	icon="openweathermap"
+			}
+
+			Frame label="Precipitations" {
+				Text item=Rain			icon="rain"
+				/*Text item=Precip_Probability	icon="rain"
+				Text item=Precip_Total		icon="rain"*/
+			}
+			Frame label="Astro" {
+				Text item=Sunrise_Time	icon="Sunrise"
+				Text item=Sunset_Time	icon="sunset"		
+			}
+
+
+			Frame label="Forecast" {
+				Text item=ObservationTime1		icon="calendar"
+				Text item=Temperature_Forecast1_Max	icon="termc"
+				Text item=Temperature_Forecast1_Min	icon="term"
+				Text item=CommonCondition_Forecast1	icon="openweathermap"
+			}
+
+			Frame {
+				Text item=ObservationTime2		icon="calendar"
+				Text item=Temperature_Forecast2_Max	icon="termc"
+				Text item=Temperature_Forecast2_Min	icon="term"
+				Text item=CommonCondition_Forecast2	icon="openweathermap"
+			}
+
+			Frame {
+				Text item=ObservationTime3		icon="calendar"
+				Text item=Temperature_Forecast3_Max	icon="termc"
+				Text item=Temperature_Forecast3_Min	icon="term"
+				Text item=CommonCondition_Forecast3	icon="openweathermap"
+			}
+
+			Frame {
+				Text item=ObservationTime4	icon="calendar"
+				Text item=Temperature_Forecast4_Max	icon="termc"
+				Text item=Temperature_Forecast4_Min	icon="term"
+				Text item=CommonCondition_Forecast4	icon="openweathermap"
+			}
+			
+			Frame {
+				Switch item=Weather_Chart_Period label="Chart Period" mappings=[0="Hour", 1="Day", 2="Week"]
+				Chart item=Weather_Chart period=h refresh=6000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
+				Chart item=Weather_Chart period=D refresh=30000 visibility=[Weather_Chart_Period==1]
+				Chart item=Weather_Chart period=W refresh=30000 visibility=[Weather_Chart_Period==2]
+			}
+		}
+	}
+	Frame label="Date" {
+		Text item=Date
+	}
+	Frame label="Demo" {
+		Text label="Group Demo" icon="firstfloor" {
+			Switch item=Lights mappings=[ONN="All On"]
+			Group item=Heating
+			Group item=Windows
+			Text item=Temperature
+		}
+		Text label="Widget Overview" icon="chart" {
+			Frame label="Binary Widgets" {
+				Switch item=DemoSwitch label="Toggle Switch"
+				Switch item=DemoSwitch label="Button Switch" mappings=[ON="On"]
+			}
+			Frame label="Discrete Widgets" {
+				Selection item=Scene_General label="Scene Selection" mappings=[0=off, 1=TV, 2=Dinner, 3=Reading]
+				Switch item=Scene_General label="Scene" mappings=[1=TV, 2=Dinner, 3=Reading]
+				Setpoint item=Temperature_Setpoint minValue=16 maxValue=28 step=0.5
+			}
+			Frame label="Percent-based Widgets" {
+				Slider item=DimmedLight switchSupport
+				Colorpicker item=RGBLight icon="slider"
+				Switch item=DemoShutter
+				Slider item=DemoBlinds
+			}
+			Frame label="Map/Location" {
+				Mapview item=DemoLocation height=10
+			}
+			
+		}
+		Text label="Multimedia" icon="video" {
+			Frame label="Radio Control" {
+				Selection item=Radio_Station mappings=[0=off, 1=HR3, 2=SWR3, 3=FFH]
+				Slider item=Volume
+			}
+			Frame label="Multimedia Widgets" {
+				Image url="http://localhost:8080/images/splash-ipad-h.png" label="openHAB" {
+					Text label="http://www.openHAB.org" icon="icon"
+				}
+				Video url="http://demo.openhab.org/Hue.m4v"
+				Webview url="http://heise-online.mobi/" height=8
+			}
+		}
+	}
+}
